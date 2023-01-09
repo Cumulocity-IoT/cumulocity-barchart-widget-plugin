@@ -1,0 +1,10 @@
+hr.separator {
+    border-color: #677680;
+}
+
+.delete-btn {
+    border-radius: 30px;
+    border-color: #1776bf;
+    background-color: #ffffff;
+    color: #1776bf;
+}

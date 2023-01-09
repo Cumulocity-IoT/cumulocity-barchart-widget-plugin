@@ -1,0 +1,10 @@
+<div class="widget-container" style="height: calc(100% - 30px);">
+    <div class="icons-container">
+        <div class="icon-container" [style.width]="columnPercentage" *ngFor="let icon of chart.data.icons">
+            <img [src]="icon" class="dp-icon" />
+        </div>
+    </div>
+    <div style="height: calc(100% - 60px);">
+        <canvas [id]="getUniqueIdForChart()" ></canvas>
+    </div>
+</div>
