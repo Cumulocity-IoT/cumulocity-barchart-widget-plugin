@@ -10,7 +10,7 @@ This Bar Chart widget is the Cumulocity module federation plugin created using c
 |--------------------|------------|------------------|
 | 2.x.x(coming soon) | >= 1016.x.x| 1.x.x            | 
 
-![Preview](src/c8y-barchart-widget/assets/img-preview.png)
+![Preview](/assets/img-preview.png)
 
 ## Prerequisite
    Cumulocity c8ycli >=1016.x.x
