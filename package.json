@@ -1,7 +1,7 @@
 {
   "name": "cumulocity-barchart-widget-plugin",
   "version": "1.0.0-beta",
-  "description": "This is the Cumulocity module federation plugin. Plugins can be developed like any Cumulocity application, but can be used at runtime by other applications. Therefore, they export an Angular module which can then be imported by any other application. The exports are defined in `package.json`:",
+  "description": "The Bar Chart Widget allows you to define multiple datapoints as constant values or realtime measurements from a device or device group.",
   "scripts": {
     "start": "c8ycli server",
     "build": "c8ycli build",
@@ -60,21 +60,24 @@
   "c8y": {
     "application": {
       "name": "Cumulocity Bar Chart Widget Plugin",
-      "description": "Cumulocity Bar chart widget with module federation",
+      "description": "The Bar Chart Widget allows you to define multiple datapoints as constant values or realtime measurements from a device or device group.",
       "contextPath": "c8y-barchart-widget",
       "key": "c8y-barchart-widget-application-key",
-      "globalTitle": "Cumulocity Bar Chart widget with module federation",
+      "globalTitle": "The Bar Chart Widget allows you to define multiple datapoints as constant values or realtime measurements from a device or device group.",
       "tabsHorizontal": true,
       "isPackage": true,
       "noAppSwitcher": true,
       "requiredPlatformVersion": ">=1016.0.0",
+      "icon": {
+        "class": "fa fw fa-database"
+      },
       "package": "plugin",
       "exports": [
         {
           "name": "Cumulocity Bar Chart Widget Plugin",
           "module": "C8yBarchartWidgetModule",
           "path": "./widget/c8y-barchart-widget.module.ts",
-          "description": "Cumulocity Bar Chart widget"
+          "description": "The Bar Chart Widget allows you to define multiple datapoints as constant values or realtime measurements from a device or device group."
         }
       ],
       "remotes": {

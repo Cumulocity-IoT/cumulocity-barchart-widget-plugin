@@ -30,12 +30,12 @@ interface CustomChart {
     content: any,
     type: string,
     data: {
-      points: number[],
-      labels: string[],
-      icons: string[],
-      colors: string[]
+        points: number[],
+        labels: string[],
+        icons: string[],
+        colors: string[]
     }
-  }
+}
 
 
 @Component({
@@ -74,7 +74,7 @@ export class C8yBarchartWidget implements OnDestroy, OnInit {
 
             // Get datapoints
             this.configDatapoints = this.config.customwidgetdata.datapoints;
-            if(this.configDatapoints === undefined || this.configDatapoints.length === 0) {
+            if (this.configDatapoints === undefined || this.configDatapoints.length === 0) {
                 throw new Error("Bar chart widget - Datapoints are not configured.");
             }
             let datapointsLength = this.configDatapoints.length;
@@ -91,20 +91,20 @@ export class C8yBarchartWidget implements OnDestroy, OnInit {
             });
 
             // Add points to the array
-            for(let i=0; i<datapointsLength; i++) {
-                if(this.configDatapoints[i].valueType === "constant") {
-                    if(this.configDatapoints[i].value === undefined || this.configDatapoints[i].value === "") {
+            for (let i = 0; i < datapointsLength; i++) {
+                if (this.configDatapoints[i].valueType === "constant") {
+                    if (this.configDatapoints[i].value === undefined || this.configDatapoints[i].value === "") {
                         console.log("Bar chart widget - Value is missing.");
                         this.chart.data.points.push(0);
                     } else {
                         this.chart.data.points.push(this.configDatapoints[i].value);
                     }
-                } else if(this.configDatapoints[i].valueType === "measurement") {
-                    if(this.configDatapoints[i].managedObjectId === undefined || this.configDatapoints[i].managedObjectId === ""){
+                } else if (this.configDatapoints[i].valueType === "measurement") {
+                    if (this.configDatapoints[i].managedObjectId === undefined || this.configDatapoints[i].managedObjectId === "") {
                         console.log("Bar chart widget - Device/ Device group is missing.");
                         this.chart.data.points.push(0);
                     } else {
-                        if(this.configDatapoints[i].value === undefined || this.configDatapoints[i].value === "") {
+                        if (this.configDatapoints[i].value === undefined || this.configDatapoints[i].value === "") {
                             console.log("Bar chart widget - Fragment series is missing.");
                             this.chart.data.points.push(0);
                         } else {
@@ -120,11 +120,11 @@ export class C8yBarchartWidget implements OnDestroy, OnInit {
                             };
                             let resp = await this.measurementSvc.list(measurementFilter);
                             this.chart.data.points.push(resp.data[0][fragmentSeries[0]][fragmentSeries[1]].value);
-                            
+
                             // Create realtime subscriptions
-                            let subs = this.realtimeSvc.subscribe('/measurements/'+this.configDatapoints[i].managedObjectId, (resp) => {
-                                if(resp.data.data[fragmentSeries[0]]) {
-                                    if(resp.data.data[fragmentSeries[0]][fragmentSeries[1]]) {
+                            let subs = this.realtimeSvc.subscribe('/measurements/' + this.configDatapoints[i].managedObjectId, (resp) => {
+                                if (resp.data.data[fragmentSeries[0]]) {
+                                    if (resp.data.data[fragmentSeries[0]][fragmentSeries[1]]) {
                                         this.chart.data.points[i] = resp.data.data[fragmentSeries[0]][fragmentSeries[1]].value;
                                         this.chart.content.update();
                                     }
@@ -137,14 +137,14 @@ export class C8yBarchartWidget implements OnDestroy, OnInit {
                     console.log("Bar chart widget - Invalid value type.");
                 }
             }
-            
+
             // Add icons to the array
             this.chart.data.icons = this.configDatapoints.map((dp) => {
                 return dp.icon;
             });
             this.columnPercentage = (100 / this.configDatapoints.length) + '%';
-        } catch(e) {
-            console.log("Bar Chart Widget - "+e);
+        } catch (e) {
+            console.log("Bar Chart Widget - " + e);
         }
 
         // Show chart
@@ -190,7 +190,7 @@ export class C8yBarchartWidget implements OnDestroy, OnInit {
                         display: false,
                         gridLines: {
                             display: false,
-                          },
+                        },
                         ticks: {
                             beginAtZero: true
                         }
@@ -214,7 +214,7 @@ export class C8yBarchartWidget implements OnDestroy, OnInit {
 
     // Getter Chart ID
     public getUniqueIdForChart(): string {
-        return 'canvas-'+ this.creationTimestamp;
+        return 'canvas-' + this.creationTimestamp;
     }
 
     ngOnDestroy(): void {
@@ -223,9 +223,9 @@ export class C8yBarchartWidget implements OnDestroy, OnInit {
             this.realtimeSubscriptions.forEach((subs: object) => {
                 this.realtimeSvc.unsubscribe(subs);
             });
-            
+
         } catch (error) {
-            console.log("Bar Chart Widget onsubscribe error - "+error);
+            console.log("Bar Chart Widget onsubscribe error - " + error);
 
         }
 

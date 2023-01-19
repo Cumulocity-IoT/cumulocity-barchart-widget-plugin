@@ -3,14 +3,12 @@
     margin-bottom: 30px;
 }
 
-.widget-container .icons-container > .icon-container {
+.widget-container .icons-container>.icon-container {
     display: inline-block;
     text-align: center;
 }
 
-.widget-container .icons-container > .icon-container > .dp-icon {
+.widget-container .icons-container>.icon-container>.dp-icon {
     max-height: 50px;
     max-width: 50px;
 }
-
-

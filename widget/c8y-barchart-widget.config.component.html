@@ -5,7 +5,7 @@
                 <a (click)="deleteDatapoint(i)" style="cursor: pointer;">Delete datapoint</a>
             </div>
             <div class="col-lg-3">
-                <img [src]="dp.icon" style="max-height: 30px; max-width: 30px;"/>
+                <img [src]="dp.icon" style="max-height: 30px; max-width: 30px;" />
             </div>
         </div>
         <div class="row">
@@ -19,18 +19,21 @@
             </c8y-form-group>
             <c8y-form-group class="col-lg-2">
                 <label>Value type</label>
-                <select class="form-control" name="dp-valuetype" [(ngModel)]="dp.valueType" (change)="valueTypeChanged(i)">
+                <select class="form-control" name="dp-valuetype" [(ngModel)]="dp.valueType"
+                    (change)="valueTypeChanged(i)">
                     <option value="constant">Constant</option>
                     <option value="measurement">Measurement</option>
                 </select>
             </c8y-form-group>
             <c8y-form-group class="col-lg-3" *ngIf="dp.valueType === 'constant'">
                 <label>Value</label>
-                <input type="text" class="form-control" name="dp-value" [(ngModel)]="dp.value" (change)="updateConfig()" />
+                <input type="text" class="form-control" name="dp-value" [(ngModel)]="dp.value"
+                    (change)="updateConfig()" />
             </c8y-form-group>
             <c8y-form-group class="col-lg-3" *ngIf="dp.valueType === 'measurement'">
                 <label>Select device/ device group</label>
-                <select class="form-control" name="dp-managedobject-id" [(ngModel)]="dp.managedObjectId" (change)="managedObjectChanged(dp.managedObjectId, i)">
+                <select class="form-control" name="dp-managedobject-id" [(ngModel)]="dp.managedObjectId"
+                    (change)="managedObjectChanged(dp.managedObjectId, i)">
                     <option [value]="mo.id" *ngFor="let mo of managedObjectList">{{mo.name}}</option>
                 </select>
             </c8y-form-group>
@@ -52,7 +55,7 @@
         </div>
     </div>
 </div>
-    
+
 
 <button class="btn btn-primary" (click)="addNewDatapoint()">
     Add new datapoint

@@ -4,7 +4,7 @@ This Bar Chart widget is the Cumulocity module federation plugin created using c
 
 ### Please note that this plugin is in currently under BETA mode.
 
-### Please choose Smart Map release based on Cumulocity/Application builder version:
+### Please choose Bar Chart release based on Cumulocity/Application builder version:
 
 |APPLICATION BUILDER | CUMULOCITY | BAR CHART WIDGET |
 |--------------------|------------|------------------|
@@ -60,27 +60,7 @@ This guide will teach you how to add widget in your existing or new dashboard.
 
 Congratulations! Bar Chart is configured.
 
-**How to start**
-Run the command below to scaffold a `widget` plugin.
-
-```
-c8ycli new <yourPluginName> widget-plugin
-```
-
-As the app.module is a typical Cumuloctiy application, any new plugin can be tested via the CLI:
-
-```
-npm start -- --shell cockpit
-```
-
-In the Module Federation terminology, `widget` plugin is called `remote` and the `cokpit` is called `shell`. Modules provided by this `widget` will be loaded by the `cockpit` application at the runtime. This plugin provides a basic custom widget that can be accessed through the `Add widget` menu.
-
-> Note that the `--shell` flag creates a proxy to the cockpit application and provides` WidgetPluginModule` as an `remote` via URL options.
-
-Also deploying needs no special handling and can be simply done via `npm run deploy`. As soon as the application has exports it will be uploaded as a plugin.
-
 ## User Guide
-
 
 ### Configuration - to view the Bar Chart widget
 1. Make sure you have successfully installed the widget.
@@ -103,7 +83,7 @@ Also deploying needs no special handling and can be simply done via `npm run dep
 
 ------------------------------
 
-These tools are provided as-is and without warranty or support. They do not constitute part of the Software AG product suite. Users are free to use, fork and modify them, subject to the license agreement. While Software AG welcomes contributions, we cannot guarantee to include every contribution in the master project.
+This widget is provided as-is and without warranty or support. They do not constitute part of the Software AG product suite. Users are free to use, fork and modify them, subject to the license agreement. While Software AG welcomes contributions, we cannot guarantee to include every contribution in the master project.
 
 ------------------------------
 

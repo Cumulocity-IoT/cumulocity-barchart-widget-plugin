@@ -45,11 +45,11 @@ export class C8yBarchartWidgetConfig implements OnInit, OnDestroy {
         ]
     };
 
-    constructor(private invSvc: InventoryService, private fetchClient: FetchClient) {}
+    constructor(private invSvc: InventoryService, private fetchClient: FetchClient) { }
 
     ngOnInit(): void {
         this.getAllDevicesAndGroups();
-        if(_.has(this.config, 'customwidgetdata')) {
+        if (_.has(this.config, 'customwidgetdata')) {
             this.widgetInfo = _.get(this.config, 'customwidgetdata');
         } else { // Adding a new widget
             _.set(this.config, 'customwidgetdata', this.widgetInfo);
@@ -121,12 +121,12 @@ export class C8yBarchartWidgetConfig implements OnInit, OnDestroy {
         this.invSvc.list(filter).then((resp) => {
             resp.data.forEach((mo) => {
                 this.managedObjectList.push({
-                  id: mo.id,
-                  name: mo.name  
+                    id: mo.id,
+                    name: mo.name
                 });
             });
         }, (err) => {
-            console.log("Bar Chart widget Configuration: "+err);
+            console.log("Bar Chart widget Configuration: " + err);
         });
     }
 

@@ -50,4 +50,4 @@ import { ChartsModule } from "ng2-charts";
         },
     ],
 })
-export class C8yBarchartWidgetModule {}
+export class C8yBarchartWidgetModule { }
