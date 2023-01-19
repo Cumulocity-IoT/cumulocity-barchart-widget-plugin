@@ -1,4 +1,4 @@
-# Bar Chart widget for Cumulocity [<img width="35" src="https://user-images.githubusercontent.com/32765455/211497905-561e9197-18b9-43d5-a023-071d3635f4eb.png"/>]
+# Bar Chart widget for Cumulocity [<img width="35" src="https://user-images.githubusercontent.com/32765455/211497905-561e9197-18b9-43d5-a023-071d3635f4eb.png"/>](https://github.com/SoftwareAG/cumulocity-barchart-widget-plugin/releases/download/1.0.0-beta/c8y-barchart-widget-1.0.0-beta.zip)
 
 This Bar Chart widget is the Cumulocity module federation plugin created using c8ycli. This plugin can be used in Application Builder or Cockpit. The BAr Chart widget allows you to define multiple datapoints as constant (fixed) values or actual measurement values in realtime from Device or Device Groups. In addition, you can add custom icon respective to each datapoint. 
 
@@ -20,8 +20,7 @@ This Bar Chart widget is the Cumulocity module federation plugin created using c
 
 ### Runtime Widget Deployment?
 
-* This widget support runtime deployment. Download [Runtime Binary] -- Add binary file
- and install via Administrations(Beta mode) --> Ecosystems --> Applications --> Packages.
+* This widget support runtime deployment. Download [Runtime Binary](https://github.com/SoftwareAG/cumulocity-barchart-widget-plugin/releases/download/1.0.0-beta/c8y-barchart-widget-1.0.0-beta.zip) and install via Administrations(Beta mode) --> Ecosystems --> Applications --> Packages.
 
 
 ## QuickStart
