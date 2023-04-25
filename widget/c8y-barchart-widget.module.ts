@@ -37,7 +37,7 @@ import { ChartsModule } from "ng2-charts";
             useValue: {
                 id: "global.presales.c8y.barchart.widget.widget",
                 label: "Bar chart",
-                description: "Bar chart widget",
+                description: "The Bar Chart Widget allows you to define multiple datapoints as constant values or realtime measurements from a device or device group.",
                 component: C8yBarchartWidget,
                 configComponent: C8yBarchartWidgetConfig,
                 previewImage: require("./assets/img-preview.png"),

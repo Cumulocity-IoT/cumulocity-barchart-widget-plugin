@@ -1,16 +1,20 @@
 {
   "name": "cumulocity-barchart-widget-plugin",
-  "version": "1.0.0-beta",
+  "version": "1.0.0",
   "description": "The Bar Chart Widget allows you to define multiple datapoints as constant values or realtime measurements from a device or device group.",
   "scripts": {
     "start": "c8ycli server",
-    "build": "c8ycli build",
+    "build": "c8ycli build --env.mode=production",
     "deploy": "c8ycli deploy",
     "postinstall": "ngcc",
     "prebuild": " gulp clean",
     "postbuild": " gulp bundle"
   },
-  "keywords": [],
+  "keywords": [
+    "Cumulocity",
+    "Plugin",
+    "Widget"
+  ],
   "author": "Meer Arfath- Software AG, Global Presales",
   "license": "Apache-2.0",
   "dependencies": {
@@ -30,10 +34,10 @@
     "@c8y/style": "1016.0.85",
     "@ngx-translate/core": "14.0.0",
     "angular": "1.6.9",
-    "chart.js": "2.9.3",
+    "chart.js": "^2.9.3",
     "chartjs-plugin-datalabels": "1.0.0",
     "core-js": "3.4.0",
-    "ng2-charts": "2.4.2",
+    "ng2-charts": "^2.4.2",
     "rxjs": "~6.6.3",
     "url-search-params-polyfill": "6.0.0",
     "zone.js": "~0.11.7"
@@ -59,10 +63,10 @@
   },
   "c8y": {
     "application": {
-      "name": "Cumulocity Bar Chart Widget Plugin",
+      "name": "Bar Chart Widget",
       "description": "The Bar Chart Widget allows you to define multiple datapoints as constant values or realtime measurements from a device or device group.",
-      "contextPath": "c8y-barchart-widget",
-      "key": "c8y-barchart-widget-application-key",
+      "contextPath": "sag-ps-pkg-barchart-widget",
+      "key": "sag-ps-pkg-barchart-widget-application-key",
       "globalTitle": "The Bar Chart Widget allows you to define multiple datapoints as constant values or realtime measurements from a device or device group.",
       "tabsHorizontal": true,
       "isPackage": true,
@@ -74,7 +78,7 @@
       "package": "plugin",
       "exports": [
         {
-          "name": "Cumulocity Bar Chart Widget Plugin",
+          "name": "Bar Chart Widget",
           "module": "C8yBarchartWidgetModule",
           "path": "./widget/c8y-barchart-widget.module.ts",
           "description": "The Bar Chart Widget allows you to define multiple datapoints as constant values or realtime measurements from a device or device group."
