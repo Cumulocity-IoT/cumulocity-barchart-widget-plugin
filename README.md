@@ -8,7 +8,7 @@ The Bar Chart widget is the Cumulocity module federation plugin created using c8
 |--------------------|------------|------------------|
 | 2.0.x              | >= 1016.x.x| 1.x.x            | 
 
-![Preview](/widget/assets/img-preview.png)
+![Preview](assets/img-preview.png)
 
 ## Prerequisite
    Cumulocity c8ycli >=1016.x.x
