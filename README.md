@@ -4,7 +4,7 @@ The Bar Chart widget is the Cumulocity module federation plugin created using c8
 
 ### Please choose Bar Chart release based on Cumulocity/Application builder version:
 
-|APPLICATION BUILDER | CUMULOCITY | BAR CHART WIDGET |
+|APPLICATION BUILDER&nbsp; | &nbsp; CUMULOCITY&nbsp; | &nbsp;BAR CHART WIDGET&nbsp; |
 |--------------------|------------|------------------|
 | 2.0.x              | >= 1016.x.x| 1.x.x            | 
 
@@ -18,7 +18,7 @@ The Bar Chart widget is the Cumulocity module federation plugin created using c8
 
 ### Runtime Widget Deployment?
 
-* This widget support runtime deployment. Download [Runtime Binary](https://github.com/SoftwareAG/cumulocity-barchart-widget-plugin/releases/download/1.0.0/sag-ps-pkg-barchart-widget-1.0.0.zip) and install via Administrations --> Ecosystems --> Applications --> Packages.
+* This widget support runtime deployment. Download [Runtime Binary](https://github.com/SoftwareAG/cumulocity-barchart-widget-plugin/releases/download/1.0.1/sag-ps-pkg-barchart-widget-1.0.1.zip) and install via Administrations --> Ecosystems --> Applications --> Packages.
 
 
 ## QuickStart

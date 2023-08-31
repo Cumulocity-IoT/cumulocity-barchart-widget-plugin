@@ -1,6 +1,6 @@
 {
   "name": "cumulocity-barchart-widget-plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The Bar Chart Widget allows you to define multiple datapoints as constant values or realtime measurements from a device or device group.",
   "scripts": {
     "start": "c8ycli server",
