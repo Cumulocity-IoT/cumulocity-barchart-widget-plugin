@@ -1,62 +1,74 @@
-<div class="row form-row" *ngFor="let dp of widgetInfo.datapoints; let i = index">
-    <div class="col-lg-12">
-        <div class="row" style="margin-bottom: 5px;">
-            <div class="col-lg-3">
-                <a (click)="deleteDatapoint(i)" style="cursor: pointer;">Delete datapoint</a>
-            </div>
-            <div class="col-lg-3">
-                <img [src]="dp.icon" style="max-height: 30px; max-width: 30px;" />
-            </div>
-        </div>
+<div>
+    <div class="col-sm-4">
         <div class="row">
-            <c8y-form-group class="col-lg-3">
-                <label>Label</label>
-                <input type="text" class="form-control" [(ngModel)]="dp.label" (change)="updateConfig()" />
-            </c8y-form-group>
-            <c8y-form-group class="col-lg-4">
-                <label>Icon</label>
-                <input type="file" class="form-control" name="dp-icon" (change)="updateIconInConfig($event, i)" />
-            </c8y-form-group>
-            <c8y-form-group class="col-lg-2">
-                <label>Value type</label>
-                <select class="form-control" name="dp-valuetype" [(ngModel)]="dp.valueType"
-                    (change)="valueTypeChanged(i)">
-                    <option value="constant">Constant</option>
-                    <option value="measurement">Measurement</option>
-                </select>
-            </c8y-form-group>
-            <c8y-form-group class="col-lg-3" *ngIf="dp.valueType === 'constant'">
-                <label>Value</label>
-                <input type="text" class="form-control" name="dp-value" [(ngModel)]="dp.value"
-                    (change)="updateConfig()" />
-            </c8y-form-group>
-            <c8y-form-group class="col-lg-3" *ngIf="dp.valueType === 'measurement'">
-                <label>Select device/ device group</label>
-                <select class="form-control" name="dp-managedobject-id" [(ngModel)]="dp.managedObjectId"
-                    (change)="managedObjectChanged(dp.managedObjectId, i)">
-                    <option [value]="mo.id" *ngFor="let mo of managedObjectList">{{mo.name}}</option>
-                </select>
-            </c8y-form-group>
-            <c8y-form-group class="col-lg-3" *ngIf="dp.valueType === 'measurement'">
-                <label>Select fragment series</label>
-                <select class="form-control" name="dp-measurement-id" [(ngModel)]="dp.value" (change)="updateConfig()">
-                    <option [value]="fs" *ngFor="let fs of dp.supportedFragmentSeries">{{fs}}</option>
-                </select>
-            </c8y-form-group>
-            <c8y-form-group class="col-lg-3">
-                <label>Color</label>
-                <input type="color" name="dp-color" [(ngModel)]="dp.color" (change)="updateConfig()" />
-            </c8y-form-group>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <hr class="separator" />
+            <div class="form-group col-sm-12 ">
+                <form [formGroup]="formGroup">
+                    <c8y-datapoint-selection-list [minActiveCount]="0"
+                        [defaultFormOptions]="datapointSelectDefaultFormOptions" [config]="datapointSelectionConfig"
+                        formControlName="datapoints" name="datapoints"></c8y-datapoint-selection-list>
+                </form>
             </div>
         </div>
     </div>
+    <div class="col-sm-8">
+        <div class="row">
+            <h4 style="margin-top: 10px;">Icons for selected datapoints</h4>
+            <br>
+            <div *ngFor="let dp of config.datapoints; let i=index" class="d-flex">
+                <c8y-form-group class="col-sm-8" *ngIf="dp.__active === true">
+                    <label>{{dp.label}}</label>
+                    <input type="file" class="form-control" name="dp-icon" (change)="datapointsIconChange($event, i)" />
+                </c8y-form-group>
+                <img [src]="dp.icon" style="max-height: 40px; max-width: 80px; margin-top: 10px;"
+                    *ngIf="dp.icon && dp.__active === true" />
+            </div>
+        </div>
+        <div class="row">
+            <h4>Constant datapoints</h4>
+            <br>
+            <div class="row form-row" *ngFor="let dp of widgetInfo.datapoints; let i = index">
+                <div class="col-sm-12">
+                    <div class="row" style="margin-bottom: 5px;">
+                        <div class="col-sm-5">
+                            <a (click)="deleteDatapoint(i)" style="cursor: pointer;">Delete constant datapoint</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <c8y-form-group class="col-md-5 col-sm-12">
+                            <label>Label</label>
+                            <input type="text" class="form-control" [(ngModel)]="dp.label" (change)="updateConfig()" />
+                        </c8y-form-group>
+                        <c8y-form-group class="col-md-3 col-sm-6">
+                            <label>Icon</label>
+                            <input type="file" class="form-control" name="dp-icon"
+                                (change)="updateIconInConfig($event, i)" />
+                        </c8y-form-group>
+                        <div class="col-md-2 col-sm-2">
+                            <img [src]="dp.icon" style="max-height: 40px; max-width: 80px;  margin-top: 10px;" />
+                        </div>
+                        <c8y-form-group class="col-md-5 col-sm-12" *ngIf="dp.valueType === 'constant'">
+                            <label>Value</label>
+                            <input type="text" class="form-control" name="dp-value" [(ngModel)]="dp.value"
+                                (change)="updateConfig()" />
+                        </c8y-form-group>
+
+                        <c8y-form-group class="col-md-5 col-sm-12">
+                            <label>Color</label>
+                            <input type="color" name="dp-color" [(ngModel)]="dp.color" (change)="updateConfig()" />
+                        </c8y-form-group>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <hr class="separator" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary" (click)="addNewDatapoint()">
+                Add new constant datapoint
+            </button>
+        </div>
+    </div>
+
+
 </div>
-
-
-<button class="btn btn-primary" (click)="addNewDatapoint()">
-    Add new datapoint
-</button>

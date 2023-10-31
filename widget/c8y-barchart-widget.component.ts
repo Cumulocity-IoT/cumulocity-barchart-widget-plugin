@@ -68,81 +68,77 @@ export class C8yBarchartWidget implements OnDestroy, OnInit {
 
     async ngOnInit() {
         try {
-
+            
             // Get creation timestamp
             this.creationTimestamp = this.config.customwidgetdata.creationTimestamp;
 
-            // Get datapoints
+            // Get constant datapoints
             this.configDatapoints = this.config.customwidgetdata.datapoints;
-            if (this.configDatapoints === undefined || this.configDatapoints.length === 0) {
-                throw new Error("Bar chart widget - Datapoints are not configured.");
-            }
-            let datapointsLength = this.configDatapoints.length;
-
-            // Add labels to the array
-            this.chart.data.labels = this.configDatapoints.map((dp) => {
-                // Create sub-array by splitting by space to enable multi-line label.
-                return dp.label.split(" ");
-            });
-
-            // Add colors to the array
-            this.chart.data.colors = this.configDatapoints.map((dp) => {
-                return dp.color;
-            });
 
             // Add points to the array
+            if(this.configDatapoints && this.configDatapoints.length > 0){
+                let datapointsLength = this.configDatapoints.length;
             for (let i = 0; i < datapointsLength; i++) {
                 if (this.configDatapoints[i].valueType === "constant") {
+                    this.chart.data.labels.push(this.configDatapoints[i].label);
+                    this.chart.data.colors.push(this.configDatapoints[i].color);
+                    this.chart.data.icons.push(this.configDatapoints[i].icon);
                     if (this.configDatapoints[i].value === undefined || this.configDatapoints[i].value === "") {
                         console.log("Bar chart widget - Value is missing.");
                         this.chart.data.points.push(0);
                     } else {
                         this.chart.data.points.push(this.configDatapoints[i].value);
                     }
-                } else if (this.configDatapoints[i].valueType === "measurement") {
-                    if (this.configDatapoints[i].managedObjectId === undefined || this.configDatapoints[i].managedObjectId === "") {
-                        console.log("Bar chart widget - Device/ Device group is missing.");
-                        this.chart.data.points.push(0);
-                    } else {
-                        if (this.configDatapoints[i].value === undefined || this.configDatapoints[i].value === "") {
-                            console.log("Bar chart widget - Fragment series is missing.");
-                            this.chart.data.points.push(0);
-                        } else {
-                            let fragmentSeries: string[] = this.configDatapoints[i].value.split(".");
-                            let measurementFilter = {
-                                source: this.configDatapoints[i].managedObjectId,
-                                dateFrom: '1980-01-01',
-                                dateTo: formatDate(new Date(), 'yyyy-MM-dd', 'en'),
-                                revert: true,
-                                valueFragmentType: fragmentSeries[0],
-                                valueFragmentSeries: fragmentSeries[1],
-                                pageSize: 1
-                            };
-                            let resp = await this.measurementSvc.list(measurementFilter);
-                            this.chart.data.points.push(resp.data[0][fragmentSeries[0]][fragmentSeries[1]].value);
-
-                            // Create realtime subscriptions
-                            let subs = this.realtimeSvc.subscribe('/measurements/' + this.configDatapoints[i].managedObjectId, (resp) => {
-                                if (resp.data.data[fragmentSeries[0]]) {
-                                    if (resp.data.data[fragmentSeries[0]][fragmentSeries[1]]) {
-                                        this.chart.data.points[i] = resp.data.data[fragmentSeries[0]][fragmentSeries[1]].value;
-                                        this.chart.content.update();
-                                    }
-                                }
-                            });
-                            this.realtimeSubscriptions.push(subs);
-                        }
-                    }
-                } else {
+                } 
+                else {
                     console.log("Bar chart widget - Invalid value type.");
                 }
             }
-
-            // Add icons to the array
-            this.chart.data.icons = this.configDatapoints.map((dp) => {
-                return dp.icon;
-            });
-            this.columnPercentage = (100 / this.configDatapoints.length) + '%';
+            }
+            //configuring datapoints
+            if(this.config.datapoints && this.config.datapoints.length > 0){
+                    for(let i=0;i<this.config.datapoints.length;i++){
+                    if(this.config.datapoints[i].__active=== true){
+                        //pushing label name
+                        this.chart.data.labels.push(this.config.datapoints[i].label);
+                        //pushing color
+                        this.chart.data.colors.push(this.config.datapoints[i].color);
+                        //pushing icons if any
+                        if(this.config.datapoints[i].icon){
+                            this.chart.data.icons.push(this.config.datapoints[i].icon);
+                        }
+                        else{
+                            this.chart.data.icons.push("");
+                        }
+                        //pushing measurement
+                        let fragment=this.config.datapoints[i].fragment;
+                        let series=this.config.datapoints[i].series;
+                        let measurementFilter = {
+                            source: this.config.datapoints[i].__target.id,
+                            dateFrom: '1980-01-01',
+                            dateTo: formatDate(new Date(), 'yyyy-MM-dd', 'en'),
+                            revert: true,
+                            valueFragmentType: fragment,
+                            valueFragmentSeries: series,
+                            pageSize: 1
+                        };
+                        let resp = await this.measurementSvc.list(measurementFilter);
+                        this.chart.data.points.push(resp.data[0][fragment][series].value);
+                    
+                        let subs = this.realtimeSvc.subscribe('/measurements/' + this.config.datapoints[i].__target.id, (resp) => {
+                            if (resp.data.data[fragment]) {
+                                if (resp.data.data[fragment][series]) {
+                                    const ind=this.chart.data.labels.findIndex((ele)=> ele == this.config.datapoints[i].label);
+                                    this.chart.data.points[ind] = resp.data.data[fragment][series].value;
+                                    this.chart.content.update();
+                                }
+                            }
+                        });
+                        this.realtimeSubscriptions.push(subs);
+                    }
+                }
+            }
+            this.columnPercentage = (100 / this.chart.data.labels.length) + '%';
         } catch (e) {
             console.log("Bar Chart Widget - " + e);
         }

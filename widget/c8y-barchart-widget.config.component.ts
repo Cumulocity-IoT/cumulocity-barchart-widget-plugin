@@ -16,8 +16,25 @@
 * limitations under the License.
  */
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { AbstractControl, FormBuilder, NgForm, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { FetchClient, InventoryService } from '@c8y/ngx-components/api';
+import { DatapointAttributesFormConfig, DatapointSelectorModalOptions, KPIDetails } from '@c8y/ngx-components/datapoint-selector';
 import * as _ from "lodash";
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+export function singleDatapointValidation(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => { 
+      const datapoints: any[] = control.value; 
+      if (!datapoints || !datapoints.length) {  return null;  }  
+      const activeDatapointsList = datapoints.filter(datapoint => datapoint.__active);  
+      if (activeDatapointsList.length === 1) { 
+        return null;  
+      } 
+      return { singleDataPointActive: true }; 
+    };
+
+  }
 
 @Component({
     selector: "c8y-barchart-widget-config-component",
@@ -45,7 +62,16 @@ export class C8yBarchartWidgetConfig implements OnInit, OnDestroy {
         ]
     };
 
-    constructor(private invSvc: InventoryService, private fetchClient: FetchClient) { }
+    datapointSelectDefaultFormOptions: Partial<DatapointAttributesFormConfig> = {
+        showRange: false,
+        showChart: false,
+      };
+      datapointSelectionConfig: Partial<DatapointSelectorModalOptions> = {};
+      formGroup: ReturnType<C8yBarchartWidgetConfig['createForm']>;
+
+    private destroy$ = new Subject<void>();
+
+    constructor(private invSvc: InventoryService, private fetchClient: FetchClient, private formBuilder: FormBuilder, private form: NgForm) { }
 
     ngOnInit(): void {
         this.getAllDevicesAndGroups();
@@ -54,6 +80,10 @@ export class C8yBarchartWidgetConfig implements OnInit, OnDestroy {
         } else { // Adding a new widget
             _.set(this.config, 'customwidgetdata', this.widgetInfo);
         }
+        this.initForm();
+        this.formGroup.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((value) => {
+        this.config.datapoints = [ ...value.datapoints ];
+    });
     }
 
     public addNewDatapoint() {
@@ -77,7 +107,7 @@ export class C8yBarchartWidgetConfig implements OnInit, OnDestroy {
     }
 
     public updateConfig(): void {
-        _.set(this.config, 'customwidgetdata', this.widgetInfo);
+        _.set(this.config, 'customwidgetdata', this.widgetInfo);console.log("onUpdate:",this.config);
     }
 
     public updateIconInConfig($event: Event, index: number) {
@@ -88,6 +118,15 @@ export class C8yBarchartWidgetConfig implements OnInit, OnDestroy {
             this.widgetInfo.datapoints[index].icon = reader.result as string;
             _.set(this.config, 'customwidgetdata', this.widgetInfo);
         };
+    }
+
+    public datapointsIconChange($event: Event, index: number){
+        const dpIcon = ($event.target as HTMLInputElement).files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(dpIcon);
+        reader.onload = () => {
+            this.config.datapoints[index].icon=reader.result as string;
+        }
     }
 
     public valueTypeChanged(index: number): void {
@@ -133,5 +172,19 @@ export class C8yBarchartWidgetConfig implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         //unsubscribe from observables here
     }
+
+    private initForm(): void {
+        this.formGroup = this.createForm();
+        this.form.form.addControl('config', this.formGroup);
+        if (this.config?.datapoints) {
+          this.formGroup.patchValue({ datapoints: this.config.datapoints });
+        }
+      }
+    
+    private createForm() {
+        return this.formBuilder.group({
+          datapoints: this.formBuilder.control(new Array<KPIDetails>(), [])
+        });
+      }
 
 }

@@ -19,15 +19,16 @@
  * @format
  */
 
-import { CoreModule, HOOK_COMPONENTS } from "@c8y/ngx-components";
+import { CoreModule, DynamicDatapointsResolver, HOOK_COMPONENTS } from "@c8y/ngx-components";
 import { C8yBarchartWidgetConfig } from "./c8y-barchart-widget.config.component";
 import { C8yBarchartWidget } from "./c8y-barchart-widget.component";
 import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
 import { ChartsModule } from "ng2-charts";
+import { DatapointSelectorModule } from '@c8y/ngx-components/datapoint-selector';
 
 @NgModule({
-    imports: [CoreModule, HttpClientModule, ChartsModule],
+    imports: [CoreModule, HttpClientModule, ChartsModule, DatapointSelectorModule],
     declarations: [C8yBarchartWidget, C8yBarchartWidgetConfig],
     entryComponents: [C8yBarchartWidget, C8yBarchartWidgetConfig],
     providers: [
@@ -41,6 +42,9 @@ import { ChartsModule } from "ng2-charts";
                 component: C8yBarchartWidget,
                 configComponent: C8yBarchartWidgetConfig,
                 previewImage: require("./assets/img-preview.png"),
+                resolve: {
+                    datapoints: DynamicDatapointsResolver,
+                  },
                 data: {
                     ng1: {
                         options: { noDeviceTarget: true, noNewWidgets: false, deviceTargetNotRequired: false, groupsSelectable: true },
