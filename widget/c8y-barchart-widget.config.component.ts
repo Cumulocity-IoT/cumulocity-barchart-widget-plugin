@@ -16,7 +16,7 @@
 * limitations under the License.
  */
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { AbstractControl, FormBuilder, NgForm, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, NgForm, ValidationErrors, ValidatorFn} from '@angular/forms';
 import { FetchClient, InventoryService } from '@c8y/ngx-components/api';
 import { DatapointAttributesFormConfig, DatapointSelectorModalOptions, KPIDetails } from '@c8y/ngx-components/datapoint-selector';
 import * as _ from "lodash";
@@ -107,7 +107,7 @@ export class C8yBarchartWidgetConfig implements OnInit, OnDestroy {
     }
 
     public updateConfig(): void {
-        _.set(this.config, 'customwidgetdata', this.widgetInfo);console.log("onUpdate:",this.config);
+        _.set(this.config, 'customwidgetdata', this.widgetInfo);
     }
 
     public updateIconInConfig($event: Event, index: number) {
